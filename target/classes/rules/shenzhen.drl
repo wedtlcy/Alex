@@ -1,0 +1,32 @@
+package droolsexample
+
+// list any import classes here.
+import drools.ItemCity;
+import java.math.BigDecimal;
+import function drools.Utility.help;
+
+// declare any global variables here
+dialect "java"
+rule "Pune Medicine Item"
+
+   when
+      item : ItemCity (purchaseCity == ItemCity.City.SHENZHEN,
+                       typeofItem == ItemCity.Type.MEDICINES)
+
+   then
+      BigDecimal tax = new BigDecimal(0.0);
+      item.setLocalTax(tax.multiply(item.getSellPrice()));
+      help(drools,"info");
+end
+
+rule "Pune Groceries Item"
+
+   when
+      item : ItemCity(purchaseCity == ItemCity.City.SHENZHEN,
+                      typeofItem == ItemCity.Type.GROCERIES)
+
+   then
+      BigDecimal tax = new BigDecimal(2.0);
+      item.setLocalTax(tax.multiply(item.getSellPrice()));
+      help(drools,"added info");
+end
